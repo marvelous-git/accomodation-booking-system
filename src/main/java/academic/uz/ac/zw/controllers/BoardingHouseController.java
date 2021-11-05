@@ -29,10 +29,11 @@ public class BoardingHouseController {
     private StudentService studentService;
 
     @GetMapping
-    public String index(Model model, @ModelAttribute("success") final String success, BindingResult result){
+    public String index(Model model, @ModelAttribute("success") final String success, @ModelAttribute("error") final String error, BindingResult result){
         List<BoardingHouse> boardingHouseList =  boardingHouseService.findAll();
         model.addAttribute("boardingHouseList", boardingHouseList);
         model.addAttribute("success", success);
+        model.addAttribute("error", error);
         return "index";
     }
 
@@ -50,11 +51,11 @@ public class BoardingHouseController {
         Optional<BoardingHouse> boardingHouse=  boardingHouseService.findById(Long.parseLong(applicationRequest.getId()));
         Optional<Student> student= studentService.findByEmail(applicationRequest.getEmail());
         if(!student.isPresent()){
-            redirectAttributes.addFlashAttribute("success", "Invalid Email Entered, Register and Try again!!!" );
+            redirectAttributes.addFlashAttribute("error", "Invalid Email Entered, Register and Try again!!!" );
             return "redirect:/";
         }
         if(!applicationRequest.getEmail().equals(currentPrincipalName)){
-            redirectAttributes.addFlashAttribute("success", "You Entered an Email which does not belongs to you!!!" );
+            redirectAttributes.addFlashAttribute("error", "You Entered an Email which does not belongs to you!!!" );
             return "redirect:/";
         }
         int availableRooms = boardingHouse.get().getAvailableRooms();

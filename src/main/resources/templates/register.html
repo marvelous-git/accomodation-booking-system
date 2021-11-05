@@ -12,6 +12,11 @@
 </head>
 <body>
     <div class="container my-5">
+
+        <div th:if="${!error1.isEmpty()}" th:text="${error1}" class="alert alert-danger" role="alert">
+            This is a success alert—check it out!
+        </div>
+
         <h2 class="text-center mt-3">Registration</h2>
         <div class="col-md-10 mx-auto">
             <form action="#" th:action="@{/register}" th:object="${student}" method="post">

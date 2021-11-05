@@ -34,7 +34,8 @@ public class RegisterController {
 
 
     @GetMapping("/register")
-    public String getRegistrationForm(Student student){
+    public String getRegistrationForm(Student student, Model model, RedirectAttributes redirectAttributes, BindingResult result,  @ModelAttribute("error1") final String error1){
+        model.addAttribute("error1", error1);
         return "register";
     }
 
@@ -74,6 +75,11 @@ public class RegisterController {
     public String submit(Student student, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "register";
+        }
+        Optional<Student> existingStudent = studentService.findByEmail(student.getEmail());
+        if(existingStudent.isPresent()){
+            redirectAttributes.addFlashAttribute("error1", "Account with the same email already exists" );
+            return "redirect:/register";
         }
         studentService.save(student);
         redirectAttributes.addFlashAttribute("success", "Account Successfully Created Please login using your email & password" );

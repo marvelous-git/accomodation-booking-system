@@ -34,6 +34,8 @@
             </nav>
                 <a class="btn btn-outline-primary mr-3" th:href="'/login'" >Login</a>
                 <a class="btn btn-outline-primary" th:href="'/register'">Register</a>
+                <a th:unless="${#authentication.isAuthenticated()}" class="btn btn-outline-primary" th:href="'/logout'">Logout</a>
+            <span th:text="${#authentication.isAuthenticated()}"></span>
         </div>
 
         <main role="main">
@@ -42,7 +44,8 @@
 
             <section class="jumbotron text-center">
                 <div th:if="${!success.isEmpty()}" th:text="${success}" class="alert alert-success" role="alert">
-                    This is a success alert—check it out!
+                </div>
+                <div th:if="${!error.isEmpty()}" th:text="${error}" class="alert alert-danger" role="alert">
                 </div>
 
                 <div class="container">
