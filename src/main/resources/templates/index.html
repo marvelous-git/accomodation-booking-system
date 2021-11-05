@@ -32,10 +32,9 @@
             <nav class="my-2 my-md-0 mr-md-3">
                 <a class="p-2 text-dark active" th:href="@{/}">Home</a>
             </nav>
-                <a class="btn btn-outline-primary mr-3" th:href="'/login'" >Login</a>
-                <a class="btn btn-outline-primary" th:href="'/register'">Register</a>
-                <a th:unless="${#authentication.isAuthenticated()}" class="btn btn-outline-primary" th:href="'/logout'">Logout</a>
-            <span th:text="${#authentication.isAuthenticated()}"></span>
+                <a th:if="${#authentication.getPrincipal() == 'anonymousUser'}" class="btn btn-outline-primary mr-3" th:href="'/login'" >Login</a>
+                <a th:if="${#authentication.getPrincipal() == 'anonymousUser'}" class="btn btn-outline-primary" th:href="'/register'">Register</a>
+                <a th:if="${#authentication.getPrincipal() != 'anonymousUser'}" class="btn btn-outline-primary" th:href="'/logout'">Logout</a>
         </div>
 
         <main role="main">
