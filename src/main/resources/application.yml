@@ -1,0 +1,16 @@
+server:
+  port: 8080
+spring:
+  profiles:
+    active: staging
+  application:
+    name: accommodation-booking-service
+
+logging:
+  pattern:
+    level: ERS-ACCOUNT-MANAGEMENT-SERVICE |--> %5p
+  level:
+    root: INFO
+    org:
+      springframework:
+        web: INFO
